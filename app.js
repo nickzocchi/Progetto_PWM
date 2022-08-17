@@ -1,14 +1,18 @@
-const { json } = require("express");
 const express = require("express");
 const mongoose = require("mongoose");
 const hbs = require("express-handlebars");
-require("dotenv").config();
+const { json, response } = require("express");
 const session = require("express-session");
 const methOver = require("method-override");
+require("dotenv").config();
+const helpers = require("handlebars-helpers")();
+const path = require("path");
+const port = process.env.port;
 
 const app = express();
-app.set("view engine", "handlebars");
-app.engine("handlebars", hbs.engine({ defaultLayout: "main" }));
+
+const data = "";
+var res_data = "";
 
 // const Datastore = require("nedb");
 // const db = new Datastore("./database.db");
@@ -35,32 +39,43 @@ mongoose.connect(
 require("./models/Recipes");
 const Recipe = mongoose.model("Recipe");
 
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "views"));
+
+app.engine(
+  "hbs",
+  hbs.engine({
+    extname: "hbs",
+    defaultLayout: "main",
+    layoutsDir: __dirname + "/views/layouts/",
+  })
+);
+
 // Homepage
 app.get("/", (req, res) => {
-  let hTitle = "New research";
+  let hTitle = "Enter your ingredients";
   res.render("new_search", { headerTitle: hTitle });
 });
 
-var data = "";
-var res_data = "";
-
 app.post("/", async (request, response) => {
-  const query = request.body.input;
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": process.env.API_Key,
-      "X-RapidAPI-Host": process.env.API_Host,
-    },
-  };
-  const url = `https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&q=${query}`;
-  const res = await fetch(url, options);
-  const data = await res.json();
-  console.log(data);
+  // const query = request.body.input;
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     "X-RapidAPI-Key": process.env.API_Key,
+  //     "X-RapidAPI-Host": process.env.API_Host,
+  //   },
+  // };
+  // const url = `https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&q=${query}`;
+  // const res = await fetch(url, options);
+  // const data = await res.json();
+  // console.log(data);
+  var data = "ciao";
   response.redirect("/search_results");
 
   // const newRecipe = {
-  //   recipes: data.results,
+  //   name: data.results.name,
+  //   recipe: data.results.instructions,
   // };
   // console.log(recipes);
   // new Recipe(newRecipe).save();
@@ -69,25 +84,36 @@ app.post("/", async (request, response) => {
   //   updateDB(res_data);
 });
 
+app.post("/new_recipe", (request, response) => {
+  const manRecipe = {
+    name: request.body.name,
+    recipe: request.body.recipe,
+  };
+  // new Recipe(manRecipe).save();
+  response.redirect("/favourites");
+});
+
 app.get("/search_results", (request, response) => {
   let hTitle = "Search results";
+  console.log(data);
   response.render("search_results", {
-    title: data.results.name,
     headerTitle: hTitle,
   });
 });
 
-// // Route to save New Paste
-// app.post("/", (req, res) => {
-//   const newPaste = {
-//   title: req.body.title,
-//     pastetext: req.body.pastetext
-//   }
-//   new Paste(newPaste)
-//   .save()
-//   .then(nota =>{
-//       res.redirect("/list_paste");
-//   })
-// });
+app.get("/manual_recipe", (request, response) => {
+  let hTitle = "New manual recipe";
+  response.render("manual_recipe", {
+    headerTitle: hTitle,
+  });
+});
 
-app.listen(3000, () => console.log("In ascolto sulla porta 3000"));
+app.get("/favourites", (request, response) => {
+  let hTitle = "Your favourite recipes";
+  response.render("favourites", {
+    // title: data.results.name,
+    headerTitle: hTitle,
+  });
+});
+
+app.listen(port, () => console.log(`Server running on ${port}`));

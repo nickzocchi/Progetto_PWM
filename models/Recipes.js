@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = mongoose.Schema({
-  recipes: {},
+  name: {
+    type: String,
+    required: true,
+  },
+  recipe: {},
   datetime: {
     type: Date,
     default: Date.now,

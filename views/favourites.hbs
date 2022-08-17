@@ -1,9 +1,6 @@
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default collapsed">
-      <div class="panel-heading">
-        Recipes found
-      </div>
       <div class="panel-body">
         <table
           class="table table-hover"
@@ -20,19 +17,7 @@
           </thead>
           <tbody>
 
-            {{#each paste}}
-
-              <tr>
-                <td>{{moment datetime format="YYYY-MM-DD HH:mm"}}</td>
-                <td>{{title}}</td>
-                <td>{{ellipsis pastetext 50}}</td>
-                <td class="center"><a href="/view_paste/{{id}}"><button
-                      type="button"
-                      class="btn btn-default"
-                    ><em class="fa fa-search"></em></button></a></td>
-              </tr>
-
-            {{/each}}
+            {{#each paste}}{{/each}}
 
           </tbody>
           <tfoot>
