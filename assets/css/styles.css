@@ -11,11 +11,11 @@
 }
 
 .bg-success {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .border-success {
-  border-color: #4CAF50;
+  border-color: #4caf50;
 }
 
 body {
@@ -28,12 +28,16 @@ body {
   background-color: #16202f;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 0px;
   font-weight: 500;
   color: #fff;
 }
-
 
 /*background color*/
 .bg-light {
@@ -41,15 +45,11 @@ h1, h2, h3, h4, h5, h6 {
   border-color: rgba(255, 255, 255, 0.4) !important;
 }
 
-
-
 .bg-primary {
   background-color: #23b7e5 !important;
   border-color: #23b7e5 !important;
   color: #fff;
 }
-
-
 
 /***margins**/
 .margin-b-0 {
@@ -155,7 +155,6 @@ body.nav-toggle .main-content {
   padding-top: 30px;
 }
 
-
 /*
 Panels css
 */
@@ -164,7 +163,8 @@ Panels css
   background: #202e44;
 }
 
-.panel, .panel-heading {
+.panel,
+.panel-heading {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
@@ -219,21 +219,22 @@ Panels css
   color: #fff;
 }
 
-.panel-default > .panel-heading + .panel-collapse > .panel-body, .panel-warning > .panel-heading + .panel-collapse > .panel-body, .panel-success > .panel-heading + .panel-collapse > .panel-body {
+.panel-default > .panel-heading + .panel-collapse > .panel-body,
+.panel-warning > .panel-heading + .panel-collapse > .panel-body,
+.panel-success > .panel-heading + .panel-collapse > .panel-body {
   border-color: rgba(255, 255, 255, 0.1);
 }
-
 
 /*
 Buttons style
 */
 
 .btn-primary {
-	margin: 5px;
+  margin: 5px;
   color: #fff;
   width: 40%;
   margin-left: 30%;
-  margin-right: 30%
+  margin-right: 30%;
 }
 
 /*
@@ -259,7 +260,6 @@ Top bar styles
   height: 60px;
   line-height: 60px;
 }
-
 
 /*
 Left side navigation style
@@ -328,7 +328,8 @@ body.nav-toggle .float-navigation {
   font-weight: 400;
   font-size: 13px;
 }
-.metisMenu.nav > li > a:hover, .metisMenu.nav > li > a:focus {
+.metisMenu.nav > li > a:hover,
+.metisMenu.nav > li > a:focus {
   color: white;
   background: transparent;
 }
@@ -339,8 +340,6 @@ body.nav-toggle .float-navigation {
   margin-top: -4px;
   width: 20px;
 }
-
-
 
 /*
 Page header style
@@ -367,7 +366,10 @@ Page header style
 Form elements style
 */
 
-.form-control, input[type="text"], input[type="email"], textarea {
+.form-control,
+input[type="text"],
+input[type="email"],
+textarea {
   font-size: 13px;
   border-radius: 0px;
   box-shadow: none;
@@ -390,10 +392,14 @@ Tables style
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+.table > tbody > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > td,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > thead > tr > th {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
-
 
 /*
 Footer

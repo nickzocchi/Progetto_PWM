@@ -9,26 +9,25 @@
         >
           <thead>
             <tr>
-              <th>Date Time</th>
-              <th>Title</th>
-              <th>Preview</th>
-              <th>View</th>
+              <th>Recipe name</th>
+              <th>Instructions</th>
             </tr>
           </thead>
           <tbody>
 
-            {{#each paste}}{{/each}}
+            {{#each recipe}}
+              <tr>
+                <td>{{name}}</td>
+                <td>{{ellipsis recipe 50}}
+                </td>
+                <td class="center"><a href="/view_recipe/{{_id}}"><button
+                      class="btn btn-default"
+                    ><em class="fa fa-search"></em></button></a></td>
+              </tr>
+            {{/each}}
 
           </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="5">
-                <ul class="pagination pull-right"></ul>
-              </td>
-            </tr>
-          </tfoot>
         </table>
-
       </div>
     </div>
   </div>

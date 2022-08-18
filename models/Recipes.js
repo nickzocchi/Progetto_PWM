@@ -10,6 +10,10 @@ const recipeSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  favourite: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 mongoose.model("Recipe", recipeSchema);

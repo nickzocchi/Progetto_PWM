@@ -4,9 +4,11 @@ const hbs = require("express-handlebars");
 const { json, response } = require("express");
 const session = require("express-session");
 const methOver = require("method-override");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 const helpers = require("handlebars-helpers")();
 const path = require("path");
+const { request } = require("http");
 const port = process.env.port;
 
 const app = express();
@@ -41,6 +43,9 @@ const Recipe = mongoose.model("Recipe");
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(methOver("_method"));
 
 app.engine(
   "hbs",
@@ -85,11 +90,14 @@ app.post("/", async (request, response) => {
 });
 
 app.post("/new_recipe", (request, response) => {
+  console.log(request.body);
   const manRecipe = {
     name: request.body.name,
     recipe: request.body.recipe,
+    favourite: true,
   };
-  // new Recipe(manRecipe).save();
+  // console.log(manRecipe);
+  new Recipe(manRecipe).save();
   response.redirect("/favourites");
 });
 
@@ -110,9 +118,37 @@ app.get("/manual_recipe", (request, response) => {
 
 app.get("/favourites", (request, response) => {
   let hTitle = "Your favourite recipes";
-  response.render("favourites", {
-    // title: data.results.name,
-    headerTitle: hTitle,
+  Recipe.find({
+    favourite: true,
+  })
+    .lean()
+    .then((recipe) => {
+      response.render("favourites", {
+        recipe: recipe,
+        headerTitle: hTitle,
+      });
+    });
+});
+
+app.get("/view_recipe/:id", (request, response) => {
+  let hTitle = "View recipe";
+  Recipe.findOne({
+    _id: request.params.id,
+  })
+    .lean()
+    .then((recipe) => {
+      response.render("view_recipe", {
+        recipe: recipe,
+        headerTitle: hTitle,
+      });
+    });
+});
+
+app.get("/remove_favourite/:id", (request, response) => {
+  Recipe.deleteOne({
+    _id: request.params.id,
+  }).then((note) => {
+    response.redirect("/favourites");
   });
 });
 
