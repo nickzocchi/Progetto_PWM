@@ -1,29 +1,53 @@
-<!DOCTYPE html>
 <html lang="en">
-    <head>
-    	<title>Pantry saver</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <title>Pantry saver</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	    <meta name="description" content="Save your pantry and discover new recipes">
-	    <meta name="keywords" content="Pantry, recipes, cooking">
-	    <meta name="author" content="Niccolò Zocchi">
-	    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-        {{!-- Icon --}}
-		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="images/favicon.ico" type="image/x-icon">
-        {{!-- Plugins --}}
-        <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="plugins/metisMenu/metisMenu.min.css">
-                
-        <link href="css/styles.css" rel="stylesheet">
+    <meta
+      name="description"
+      content="Save your pantry and discover new recipes"
+    />
+    <meta name="keywords" content="Pantry, recipes, cooking" />
+    <meta name="author" content="Niccolò Zocchi" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    {{! Icon }}
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    {{! Plugins }}
+    <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="plugins/font-awesome/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="plugins/metisMenu/metisMenu.min.css" />
 
-    </head>
-    <body>
-        {{!-- Top bar  --}}
-        <div class="top-bar bg-primary">
+    <link href="css/styles.css" rel="stylesheet" />
+
+  </head>
+  <body>
+    {{! Top bar  }}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="" class="navbar-brand">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportContent" aria-controls="navbarSupportContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a href="" class="nav-link active" aria-current="page">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Link</a>
+                    </li>
+                    <li class="nav-item dropdown"><a href="" class="nav-link dropdown-toggle" id="navbarDropdown" role="button"></a></li>
+                </ul>
+            </div>
+        </div>
+    {{! <div class="top-bar bg-primary">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-6">
@@ -34,48 +58,52 @@
                     </div>
                 </div>
             </div>
+        </div> }}
+    {{! Left nav bar }}
+    {{! <aside class="float-navigation">
+      <div class="nano">
+        <div class="nano-content">
+          <ul class="metisMenu nav" id="menu">
+            <li class="nav-heading"><span></span></li>
+            <li>
+              <a href="/" aria-expanded="true"><i
+                  class="fa fa-file-text-o"
+                ></i>New</a>
+            </li>
+            <li>
+              <a href="/favourites" aria-expanded="true"><i
+                  class="fa fa-list-ul"
+                ></i>Your favourite recipes</a>
+            </li>
+            <li>
+              <a href="/manual_recipe" aria-expanded="true">
+                <i class="fa fa-list-ul"></i>New manual recipe</a>
+            </li>
+          </ul>
         </div>
-        {{!-- Left nav bar --}}
-        <aside class="float-navigation">
-            <div class="nano">
-                <div class="nano-content">
-                    <ul class="metisMenu nav" id="menu">
-                        <li class="nav-heading"><span>Last Paste</span></li>
-                        <li>
-                            <a href="/" aria-expanded="true"><i class="fa fa-file-text-o"></i>New</a>
-                        </li>
-                        <li>
-                            <a href="/favourites" aria-expanded="true"><i class="fa fa-list-ul"></i>Your favourite recipes</a>
-                        </li>
-                        <li>
-                            <a href="/manual_recipe" aria-expanded="true">
-                            <i class="fa fa-list-ul"></i>New manual recipe</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
-        {{!-- Content --}}
-        <section class="main-content">
+      </div>
+    </aside> }}
+    {{! Content }}
+    <section class="main-content">
 
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4>{{headerTitle}}</h4>
-                    </div>
-                </div>
-            </div>
+      <div class="page-header">
+        <div class="row">
+          <div class="col-sm-6">
+            <h4>{{headerTitle}}</h4>
+          </div>
+        </div>
+      </div>
 
-			{{{body}}}
-						
-            <footer class="footer">
-                <span>Pantry saver</span>
-            </footer>
+      {{{body}}}
 
-        </section>
-        {{!-- Other plugins --}}
-        <script src="plugins/jquery/dist/jquery.min.js"></script>
-        <script src="plugins/bootstrap/js/bootstrap.js"></script>
-        <script src="plugins/metisMenu/metisMenu.min.js"></script>
-    </body>
+      <footer class="footer">
+        <span>Pantry saver</span>
+      </footer>
+
+    </section>
+    {{! Other plugins }}
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="plugins/metisMenu/metisMenu.min.js"></script>
+  </body>
 </html>

@@ -20,13 +20,12 @@
           </thead>
           <tbody>
 
-            {{#each paste}}
+            {{#each recipe}}
 
               <tr>
-                <td>{{moment datetime format="YYYY-MM-DD HH:mm"}}</td>
-                <td>{{title}}</td>
-                <td>{{ellipsis pastetext 50}}</td>
-                <td class="center"><a href="/view_paste/{{id}}"><button
+                <td>{{name}}</td>
+                <td>{{ellipsis recipe 50}}</td>
+                <td class="center"><a href="/favourites/{{_id}}"><button
                       type="button"
                       class="btn btn-default"
                     ><em class="fa fa-search"></em></button></a></td>

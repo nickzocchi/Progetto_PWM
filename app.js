@@ -71,12 +71,15 @@ app.post("/", async (request, response) => {
   //     "X-RapidAPI-Host": process.env.API_Host,
   //   },
   // };
-  // const url = `https://tasty.p.rapidapi.com/recipes/list?from=0&size=20&q=${query}`;
-  // const res = await fetch(url, options);
-  // const data = await res.json();
+  // const url = `https://${process.env.API_Host}.com/recipes/list?from=0&size=20&q=${query}`;
+  // const api_res = await fetch(url, options);
+  // const data = await api_res.json();
   // console.log(data);
-  var data = "ciao";
-  response.redirect("/search_results");
+  let hTitle = "Search results";
+  // response.render("search_results", {
+  //   recipe: data,
+  //   headerTitle: hTitle,
+  // });
 
   // const newRecipe = {
   //   name: data.results.name,
@@ -90,7 +93,7 @@ app.post("/", async (request, response) => {
 });
 
 app.post("/new_recipe", (request, response) => {
-  console.log(request.body);
+  // console.log(request.body);
   const manRecipe = {
     name: request.body.name,
     recipe: request.body.recipe,
@@ -99,14 +102,6 @@ app.post("/new_recipe", (request, response) => {
   // console.log(manRecipe);
   new Recipe(manRecipe).save();
   response.redirect("/favourites");
-});
-
-app.get("/search_results", (request, response) => {
-  let hTitle = "Search results";
-  console.log(data);
-  response.render("search_results", {
-    headerTitle: hTitle,
-  });
 });
 
 app.get("/manual_recipe", (request, response) => {
@@ -123,6 +118,7 @@ app.get("/favourites", (request, response) => {
   })
     .lean()
     .then((recipe) => {
+      console.log(recipe);
       response.render("favourites", {
         recipe: recipe,
         headerTitle: hTitle,
