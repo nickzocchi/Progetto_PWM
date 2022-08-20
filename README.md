@@ -11,4 +11,4 @@ Pantry saver is a Node.js based project developed for the "Programmazione Web e 
 - Node.js
 - JavaScript
 - MongoDB
-- Bootstrap
+- Bootstrap framework
