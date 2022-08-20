@@ -21,10 +21,9 @@
           <tbody>
 
             {{#each recipe}}
-
               <tr>
                 <td>{{name}}</td>
-                <td>{{ellipsis recipe 50}}</td>
+                <td>{{ellipsis description 50}}</td>
                 <td class="center"><a href="/favourites/{{_id}}"><button
                       type="button"
                       class="btn btn-default"

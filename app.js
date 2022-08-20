@@ -13,7 +13,6 @@ const port = process.env.port;
 
 const app = express();
 
-const data = "";
 var res_data = "";
 
 // const Datastore = require("nedb");
@@ -62,24 +61,35 @@ app.get("/", (req, res) => {
   res.render("new_search", { headerTitle: hTitle });
 });
 
+let data = "";
+
 app.post("/", async (request, response) => {
-  // const query = request.body.input;
-  // const options = {
-  //   method: "GET",
-  //   headers: {
-  //     "X-RapidAPI-Key": process.env.API_Key,
-  //     "X-RapidAPI-Host": process.env.API_Host,
-  //   },
-  // };
-  // const url = `https://${process.env.API_Host}.com/recipes/list?from=0&size=20&q=${query}`;
-  // const api_res = await fetch(url, options);
-  // const data = await api_res.json();
-  // console.log(data);
-  let hTitle = "Search results";
-  // response.render("search_results", {
-  //   recipe: data,
-  //   headerTitle: hTitle,
+  const query = request.body.input;
+  const options = {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": process.env.API_Key,
+      "X-RapidAPI-Host": process.env.API_Host,
+    },
+  };
+  const url = `https://${process.env.API_Host}/recipes/list?from=0&size=5&q=${query}`;
+  const api_res = await fetch(url, options);
+  const data = await api_res.json();
+  // console.log(data.results);
+  // data.results.forEach((result) => {
+  //   console.log(result.name);
   // });
+  let hTitle = "Search results";
+  console.log(data.results);
+  data.results.forEach((result) => {
+    result.instructions.forEach((instruction) => {
+      console.log(instruction);
+    });
+  });
+  response.render("search_results", {
+    recipe: data.results,
+    headerTitle: hTitle,
+  });
 
   // const newRecipe = {
   //   name: data.results.name,
@@ -118,7 +128,7 @@ app.get("/favourites", (request, response) => {
   })
     .lean()
     .then((recipe) => {
-      console.log(recipe);
+      // console.log(recipe);
       response.render("favourites", {
         recipe: recipe,
         headerTitle: hTitle,

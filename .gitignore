@@ -1,3 +1,5 @@
 .env
 node_modules/
 Progetto_PWM.code-workspace
+api_response
+data_results
