@@ -21,6 +21,7 @@ var res_data = "";
 app.use("*/js", express.static(__dirname + "/assets/js"));
 app.use("*/plugins", express.static(__dirname + "/assets/plugins"));
 app.use("*/css", express.static(__dirname + "/assets/css"));
+app.use("*/modules", express.static(__dirname + "/node_modules"));
 app.use("*/images", express.static(__dirname + "/assets/images"));
 
 app.use(express.json());
@@ -43,7 +44,6 @@ const Recipe = mongoose.model("Recipe");
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use(methOver("_method"));
 
 app.engine(
@@ -56,12 +56,10 @@ app.engine(
 );
 
 // Homepage
-app.get("/", (req, res) => {
+app.get("/", (request, response) => {
   let hTitle = "Enter your ingredients";
-  res.render("new_search", { headerTitle: hTitle });
+  response.render("new_search", { headerTitle: hTitle });
 });
-
-let data = "";
 
 app.post("/", async (request, response) => {
   const query = request.body.input;
@@ -75,31 +73,62 @@ app.post("/", async (request, response) => {
   const url = `https://${process.env.API_Host}/recipes/list?from=0&size=5&q=${query}`;
   const api_res = await fetch(url, options);
   const data = await api_res.json();
-  // console.log(data.results);
-  // data.results.forEach((result) => {
-  //   console.log(result.name);
-  // });
   let hTitle = "Search results";
-  console.log(data.results);
+  // response.json(data);
+  var all_rec = [];
   data.results.forEach((result) => {
-    result.instructions.forEach((instruction) => {
-      console.log(instruction);
-    });
+    if (Array.isArray(result.recipes) === false) {
+      all_rec.push(result);
+      const recipe = {
+        $set: {
+          name: result.name,
+          recipe: result.instructions,
+          image: result.thumbnail_url,
+          description: result.description,
+        },
+      };
+      let filter = { name: result.name };
+      let options = { upsert: true, new: true };
+      Recipe.findOneAndUpdate(filter, recipe, options, function (err, results) {
+        if (err) {
+          console.log(err);
+        } else {
+          // console.log(results);
+        }
+      });
+    } else {
+      result.recipes.forEach((recipe) => {
+        all_rec.push(recipe);
+        let filter = { name: recipe.name };
+        let multi_recipe = {
+          $set: {
+            name: recipe.name,
+            description: recipe.description,
+            recipe: recipe.instructions,
+            image: recipe.thumbnail_url,
+          },
+        };
+        let options = { upsert: true, new: true };
+        Recipe.findOneAndUpdate(
+          filter,
+          multi_recipe,
+          options,
+          function (err, results) {
+            if (err) {
+              console.log(err);
+            } else {
+              // console.log(results);
+            }
+          }
+        );
+      });
+    }
   });
   response.render("search_results", {
-    recipe: data.results,
     headerTitle: hTitle,
+    recipe: all_rec,
+    instr: all_rec.instructions,
   });
-
-  // const newRecipe = {
-  //   name: data.results.name,
-  //   recipe: data.results.instructions,
-  // };
-  // console.log(recipes);
-  // new Recipe(newRecipe).save();
-  // db.insert(recipes);
-  // response.json(recipes);
-  //   updateDB(res_data);
 });
 
 app.post("/new_recipe", (request, response) => {
@@ -136,10 +165,11 @@ app.get("/favourites", (request, response) => {
     });
 });
 
-app.get("/view_recipe/:id", (request, response) => {
+app.get("/view_recipe/:name", (request, response) => {
   let hTitle = "View recipe";
+  console.log(request.params.name);
   Recipe.findOne({
-    _id: request.params.id,
+    name: request.params.name,
   })
     .lean()
     .then((recipe) => {
@@ -148,6 +178,25 @@ app.get("/view_recipe/:id", (request, response) => {
         headerTitle: hTitle,
       });
     });
+});
+
+app.get("/add_favourite/:name", (request, response) => {
+  console.log(request.params.name);
+  let filter = { name: request.params.name };
+  let fav = {
+    $set: {
+      favourite: true,
+    },
+  };
+  let options = { upsert: false, new: true };
+  Recipe.findOneAndUpdate(filter, fav, options, function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      // console.log(results);
+    }
+  });
+  response.send();
 });
 
 app.get("/remove_favourite/:id", (request, response) => {

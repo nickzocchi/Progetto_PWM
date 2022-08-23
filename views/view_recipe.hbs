@@ -4,7 +4,9 @@
       <div class="panel-heading">{{recipe.name}}</div>
       <div class="panel-body">
         <div class="form-group">
-          <pre id="recipe">{{recipe.recipe}}</pre>
+          {{#each recipe.recipe}}
+            <p>{{display_text}} </p>
+          {{/each}}
         </div>
         <form
           action="/remove_favourite/{{recipe._id}}"

@@ -1,48 +1,25 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default collapsed">
-      <div class="panel-heading">
-        Recipes found
-      </div>
-      <div class="panel-body">
-        <table
-          class="table table-hover"
-          data-page-size="12"
-          data-filter="#filter"
-        >
-          <thead>
-            <tr>
-              <th>Date Time</th>
-              <th>Title</th>
-              <th>Preview</th>
-              <th>View</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {{#each recipe}}
-              <tr>
-                <td>{{name}}</td>
-                <td>{{ellipsis description 50}}</td>
-                <td class="center"><a href="/favourites/{{_id}}"><button
-                      type="button"
-                      class="btn btn-default"
-                    ><em class="fa fa-search"></em></button></a></td>
-              </tr>
-
-            {{/each}}
-
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="5">
-                <ul class="pagination pull-right"></ul>
-              </td>
-            </tr>
-          </tfoot>
-        </table>
-
+<div class="row row-cols-2 row-cols-sm-3 g-4 mb-2">
+  {{#each recipe}}
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{thumbnail_url}}" class="card-img-top cover" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{name}}</h5>
+          {{#unless description}}
+            <p class="card-text">Sorry, description not available!</p>
+          {{/unless}}
+          {{! MODIFICARE PER INCLUDERE EVENTUALE CODICE HTML }}
+          <p class="card-text">{{ellipsis description 80}}</p>
+        </div>
+        <div class="card-footer">
+          <a href="/add_favourite/{{name}}/"><button
+              class="btn btn-light float-"
+            ><i class="fa-solid fa-heart"></i></button></a>
+          <a href="/view_recipe/{{name}}/"><button
+              class="btn btn-light float-end"
+            ><i class="fa-solid fa-eye"></i></button></a>
+        </div>
       </div>
     </div>
-  </div>
+  {{/each}}
 </div>
