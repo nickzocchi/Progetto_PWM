@@ -13,11 +13,6 @@ const port = process.env.port;
 
 const app = express();
 
-var res_data = "";
-
-// const Datastore = require("nedb");
-// const db = new Datastore("./database.db");
-// db.loadDatabase();
 app.use("*/js", express.static(__dirname + "/assets/js"));
 app.use("*/plugins", express.static(__dirname + "/assets/plugins"));
 app.use("*/css", express.static(__dirname + "/assets/css"));
@@ -62,6 +57,7 @@ app.get("/", (request, response) => {
 });
 
 app.post("/", async (request, response) => {
+  var all_rec = [];
   const query = request.body.input;
   const options = {
     method: "GET",
@@ -72,58 +68,54 @@ app.post("/", async (request, response) => {
   };
   const url = `https://${process.env.API_Host}/recipes/list?from=0&size=5&q=${query}`;
   const api_res = await fetch(url, options);
-  const data = await api_res.json();
-  let hTitle = "Search results";
-  // response.json(data);
-  var all_rec = [];
+  let data = await api_res.json();
+
+  // Stringify then search and remove HTML tags
+  let data2 = JSON.stringify(data);
+  someString = data2.replace(/<\/?[^>]+(>|$)/g, "");
+  data = JSON.parse(someString);
+
   data.results.forEach((result) => {
     if (Array.isArray(result.recipes) === false) {
       all_rec.push(result);
-      const recipe = {
-        $set: {
-          name: result.name,
-          recipe: result.instructions,
-          image: result.thumbnail_url,
-          description: result.description,
-        },
-      };
-      let filter = { name: result.name };
-      let options = { upsert: true, new: true };
-      Recipe.findOneAndUpdate(filter, recipe, options, function (err, results) {
-        if (err) {
-          console.log(err);
-        } else {
-          // console.log(results);
-        }
-      });
     } else {
       result.recipes.forEach((recipe) => {
         all_rec.push(recipe);
-        let filter = { name: recipe.name };
-        let multi_recipe = {
-          $set: {
-            name: recipe.name,
-            description: recipe.description,
-            recipe: recipe.instructions,
-            image: recipe.thumbnail_url,
-          },
-        };
-        let options = { upsert: true, new: true };
-        Recipe.findOneAndUpdate(
-          filter,
-          multi_recipe,
-          options,
-          function (err, results) {
-            if (err) {
-              console.log(err);
-            } else {
-              // console.log(results);
-            }
-          }
-        );
       });
     }
   });
+
+  //For each recipe in the array, push the nested components array to be in the ingredients field
+  all_rec.forEach((recipe) => {
+    recipe.sections.forEach((section) => {
+      recipe.ingredients = section.components;
+    });
+  });
+  console.log(all_rec);
+
+  all_rec.forEach((recipe) => {
+    const rec = {
+      $set: {
+        name: recipe.name,
+        recipe: recipe.instructions,
+        image: recipe.thumbnail_url,
+        description: recipe.description,
+        ingredients: recipe.ingredients,
+      },
+    };
+    let filter = { name: recipe.name };
+    let options = { upsert: true, new: true };
+    Recipe.findOneAndUpdate(filter, rec, options, function (err, results) {
+      if (err) {
+        console.log(err);
+      } else {
+        // console.log(results);
+      }
+    });
+  });
+
+  let hTitle = "Search results";
+  // response.json(all_rec);
   response.render("search_results", {
     headerTitle: hTitle,
     recipe: all_rec,
@@ -167,12 +159,13 @@ app.get("/favourites", (request, response) => {
 
 app.get("/view_recipe/:name", (request, response) => {
   let hTitle = "View recipe";
-  console.log(request.params.name);
+  // console.log(request.params.name);
   Recipe.findOne({
     name: request.params.name,
   })
     .lean()
     .then((recipe) => {
+      console.log(recipe);
       response.render("view_recipe", {
         recipe: recipe,
         headerTitle: hTitle,

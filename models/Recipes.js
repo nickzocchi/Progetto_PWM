@@ -12,6 +12,9 @@ const recipeSchema = mongoose.Schema({
   image: {
     type: String,
   },
+  ingredients: {
+    type: Array,
+  },
   datetime: {
     type: Date,
     default: Date.now,
