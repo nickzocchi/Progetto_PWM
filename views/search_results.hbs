@@ -14,12 +14,20 @@
         <div class="card-footer">
           <a href="/add_favourite/{{name}}/"><button
               class="btn btn-light float-"
-            ><i class="fa-solid fa-heart"></i></button></a><button
+            ><i class="fa-solid fa-heart"></i></button></a>
+          <button
             type="button"
             class="btn btn-light float-end"
             data-bs-toggle="modal"
             data-bs-target="#modal-{{@index}}"
           ><i class="fa-solid fa-eye"></i></button>
+          <button
+            type="button"
+            class="btn btn-light float-end"
+            style="margin-left: 20px"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-ingr-{{@index}}"
+          ><i class="fa-solid fa-list"></i></button>
         </div>
       </div>
     </div>
@@ -44,6 +52,40 @@
           <div class="modal-body">
             {{#each instructions}}
               <p> {{display_text}} </p>
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modal-ingr-{{@index}}"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-{{@index}}Label">{{name}}</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            {{#each ingredients}}
+              <p>{{raw_text}}</p>
             {{/each}}
           </div>
           <div class="modal-footer">

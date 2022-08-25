@@ -66,7 +66,7 @@ app.post("/", async (request, response) => {
       "X-RapidAPI-Host": process.env.API_Host,
     },
   };
-  const url = `https://${process.env.API_Host}/recipes/list?from=0&size=5&q=${query}`;
+  const url = `https://${process.env.API_Host}/recipes/list?from=0&size=9&q=${query}`;
   const api_res = await fetch(url, options);
   let data = await api_res.json();
 
