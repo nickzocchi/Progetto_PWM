@@ -1,35 +1,108 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default collapsed">
-      <div class="panel-body">
-        <table
-          class="table table-hover"
-          data-page-size="12"
-          data-filter="#filter"
-        >
-          <thead>
-            <tr>
-              <th>Recipe name</th>
-              <th>Instructions</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {{#each recipe}}
-              <tr>
-                <td>{{name}}</td>
-                <td>{{ellipsis recipe 50}}
-                </td>
-                <td class="center"><a href="/view_recipe/{{_id}}"><button
-                      type="button"
-                      class="btn btn-default"
-                    ><em class="fa fa-search"></em></button></a></td>
-              </tr>
-            {{/each}}
-
-          </tbody>
-        </table>
-      </div>
+<div class="page-header text-center my-2">
+  <div class="row">
+    <div class="fw-bold fs-3">
+      <p>{{headerTitle}}</p>
     </div>
   </div>
+</div>
+<div class="row row-cols-2 row-cols-sm-3 g-4 mb-2">
+  {{#each recipe}}
+    <div class="col">
+      <div class="card h-100">
+        <img src="{{image}}" class="card-img-top cover" alt="..." />
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          {{#unless description}}
+            <p class="card-text">Sorry, description not available!</p>
+          {{/unless}}
+          <p class="card-text">{{{ellipsis description 80}}}</p>
+        </div>
+        <div class="card-footer">
+          <a href="/remove_favourite/{{_id}}/"><button
+              class="btn btn-light float-"
+              target="_self"
+            ><i class="fa-solid fa-heart-circle-minus"></i></button></a>
+          <button
+            type="button"
+            class="btn btn-light float-end"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-{{_id}}"
+          ><i class="fa-solid fa-eye"></i></button>
+          <button
+            type="button"
+            class="btn btn-light float-end"
+            id="ingr-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#modal-ingr-{{_id}}"
+          ><i class="fa-solid fa-list"></i></button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modal-{{_id}}"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-{{_id}}Label">{{name}}</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            {{#each this.recipe}}
+              <p> {{display_text}} </p>
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modal-ingr-{{_id}}"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-{{@index}}Label">{{name}}</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            {{#each ingredients}}
+              <p>{{raw_text}}</p>
+            {{/each}}
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/each}}
 </div>

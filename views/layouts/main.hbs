@@ -15,20 +15,22 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
     {{! Plugins }}
     <link href="modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="css/style.css" />
     <link
       href="plugins/font-awesome/css/font-awesome.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/style.css" />
     <script
       src="https://kit.fontawesome.com/a7616bbaf6.js"
       crossorigin="anonymous"
     ></script>
   </head>
   <header>
-    <nav class="navbar navbar-expand-lg flex-wrap">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+    <nav class="navbar fixed-top navbar-expand-lg flex-wrap shadow">
+      <div
+        class="container-fluid justify-content-between justify-content-lg-center"
+      >
+        <a class="navbar-brand" href="/">
           <img
             src="images/logo.svg"
             height="30px"
@@ -36,6 +38,26 @@
           />
           Pantry saver
         </a>
+        <div
+          class="collapse navbar-collapsed d-lg-flex navbar"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/favourites">
+                Favourite recipes
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/manual_recipe">
+                Manual recipe
+              </a>
+            </li>
+          </ul>
+        </div>
         <button
           class="navbar-toggler"
           type="button"
@@ -47,50 +69,16 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">New research</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Favourite recipes
-              </a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button
-              class="btn btn-outline-success"
-              type="submit"
-            >Search</button>
-          </form>
-        </div>
       </div>
     </nav>
   </header>
   {{! Content }}
-  <section class="main-content mx-2" style="padding-top: 100px">
-    <div class="page-header text-center">
-      <div class="row">
-        <div class="">
-          <h4>{{headerTitle}}</h4>
-        </div>
-      </div>
-    </div>
+  <section class="main-content mx-2">
 
     {{{body}}}
 
   </section>
-  <footer class="footer mt-auto align-items-center d-flex">
+  <footer class="footer mt-auto align-items-center d-flex bg-light">
     <div class="container d-flex align-items-center">
       <span class="text-muted"> </span>
     </div>

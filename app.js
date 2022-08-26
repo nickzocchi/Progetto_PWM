@@ -79,9 +79,9 @@ app.post("/", async (request, response) => {
     if (Array.isArray(result.recipes) === false) {
       all_rec.push(result);
     } else {
-      result.recipes.forEach((recipe) => {
-        all_rec.push(recipe);
-      });
+      // result.recipes.forEach((recipe) => {
+      //   all_rec.push(recipe);
+      // });
     }
   });
 
@@ -189,13 +189,23 @@ app.get("/add_favourite/:name", (request, response) => {
       // console.log(results);
     }
   });
-  response.send();
+  response.redirect("/favourites");
 });
 
 app.get("/remove_favourite/:id", (request, response) => {
-  Recipe.deleteOne({
-    _id: request.params.id,
-  }).then((note) => {
+  let filter = { _id: request.params.id };
+  let remove = {
+    $set: {
+      favourite: false,
+    },
+  };
+  let options = { upsert: false, new: false };
+  Recipe.findOneAndUpdate(filter, remove, options, function (err, results) {
+    if (err) {
+      console.log(err);
+    } else {
+      // console.log(results);
+    }
     response.redirect("/favourites");
   });
 });
