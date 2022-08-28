@@ -1,4 +1,4 @@
-# Pantry saver
+![alt text](./assets/images/logo.svg = 50x50 "Pantry saver logo") # Pantry saver
 
 Save the food in your pantry and discover new recipes!
 
