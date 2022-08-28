@@ -23,7 +23,7 @@ router.get("/", (request, response) => {
 
 // Add recipe to favourites
 router.get("/add/:name", (request, response) => {
-  console.log(request.params.name);
+  //   console.log(request.params.name);
   let filter = { name: request.params.name };
   let fav = {
     $set: {
