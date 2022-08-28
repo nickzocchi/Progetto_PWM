@@ -1,4 +1,8 @@
-<img src="./assets/images/logo.svg"width="50" height="50">
+<p align="center">
+  <a href="https://gitea.io/">
+    <img alt="Gitea" src="https://raw.githubusercontent.com/go-gitea/gitea/main/public/img/gitea.svg" width="220"/>
+  </a>
+</p>
 # Pantry saver
 Save the food in your pantry and discover new recipes!
 
