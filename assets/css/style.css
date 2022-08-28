@@ -20,6 +20,15 @@ nav {
   background-color: #f9f0b5;
 }
 
+/* Center navbar */
+.navbar-collapse.collapse {
+  margin-left: -144px;
+}
+/* Remove margin when toggled */
+.navbar-collapse.show {
+  margin-left: 0px;
+}
+
 body {
   overflow-x: hidden;
   padding-top: 80px;
@@ -41,7 +50,8 @@ body {
   position: absolute;
   bottom: 0;
   width: 100vw;
-  height: 60px;
+  height: 40px;
+  background-color: ivory;
 }
 
 .cover {
