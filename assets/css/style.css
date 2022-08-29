@@ -63,3 +63,8 @@ body {
 #ingr-btn {
   margin-left: 20px;
 }
+
+.htitle {
+  text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+  color: ivory;
+}

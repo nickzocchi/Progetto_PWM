@@ -2,12 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
+// Mongoose model to use
 require("../models/Recipes");
 const Recipe = mongoose.model("Recipe");
 
 // Manual recipe inserted
 router.post("/new", (request, response) => {
-  console.log(request.body.image);
   const manRecipe = {
     name: request.body.name,
     recipe: request.body.recipe,
@@ -15,7 +15,6 @@ router.post("/new", (request, response) => {
     description: request.body.description,
     favourite: true,
   };
-  // console.log(manRecipe);
   new Recipe(manRecipe).save();
   response.redirect("/favourites");
 });
@@ -31,7 +30,6 @@ router.get("/manual", (request, response) => {
 // View recipe by name
 router.get("/view/:name", (request, response) => {
   let hTitle = "View recipe";
-  // console.log(request.params.name);
   Recipe.findOne({
     name: request.params.name,
   })

@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 
+// Mongoose model to use
 require("../models/Recipes");
 const Recipe = mongoose.model("Recipe");
 
@@ -13,7 +14,6 @@ router.get("/", (request, response) => {
   })
     .lean()
     .then((recipe) => {
-      // console.log(recipe);
       response.render("favourites", {
         recipe: recipe,
         headerTitle: hTitle,
@@ -23,7 +23,6 @@ router.get("/", (request, response) => {
 
 // Add recipe to favourites
 router.get("/add/:name", (request, response) => {
-  //   console.log(request.params.name);
   let filter = { name: request.params.name };
   let fav = {
     $set: {
@@ -50,6 +49,7 @@ router.get("/remove/:id", (request, response) => {
     },
   };
   let options = { upsert: false, new: false };
+  // Find recipe by id and set field "favourite" to false
   Recipe.findOneAndUpdate(filter, remove, options, function (err, results) {
     if (err) {
       console.log(err);

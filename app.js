@@ -6,8 +6,6 @@ const helpers = require("handlebars-helpers")();
 const mongoose = require("mongoose");
 
 // Misc
-const methOver = require("method-override");
-const bodyParser = require("body-parser");
 require("dotenv").config();
 const path = require("path");
 
@@ -40,11 +38,14 @@ mongoose.connect(
   }
 );
 
+// Set express view engine
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(methOver("_method"));
+// Middleware to parse request body
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
+// Handlebars options
 app.engine(
   "hbs",
   hbs.engine({
@@ -54,6 +55,7 @@ app.engine(
   })
 );
 
+// Use imported routes
 app.use("/", homeRoutes);
 app.use("/recipe", recipeRoutes);
 app.use("/favourites", favouritesRoutes);
